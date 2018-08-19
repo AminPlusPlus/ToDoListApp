@@ -19,5 +19,6 @@ extension Item {
 
     @NSManaged public var title: String?
     @NSManaged public var isCompleted: Bool
+    @NSManaged public var date: Date
 
 }

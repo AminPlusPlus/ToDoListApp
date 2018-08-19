@@ -17,13 +17,43 @@ class ToDoTableVC: UITableViewController {
     var resultController :  NSFetchedResultsController<Item>!
     let coreDataStack = PersistenceService()
     
+    func initCoreDataCollection ()
+    {
+        //request
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        let sortDescription = NSSortDescriptor(key: "date", ascending: true)
+        
+        request.sortDescriptors = [sortDescription]
+        
+        //Init
+        resultController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: coreDataStack.manageContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        
+        //fetch
+        
+        do {
+        try resultController.performFetch()
+        } catch
+        {
+            print("Error : \(error.localizedDescription)")
+        }
+        
+    }
+    
     
     @IBOutlet weak var progressView: UIProgressView!
-    var demoTodoList  = ["Learn Realm", "Clean Code", "java Start", "JSX"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //init Core Data
+        initCoreDataCollection()
+        
+        
     }
 
    
@@ -37,14 +67,19 @@ class ToDoTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return demoTodoList.count
+        
+        print(resultController.sections?[section].objects?.count)
+        
+        return resultController.sections?[section].objects?.count ?? 0
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "todo", for: indexPath) as! ToDoCell
 
-        cell.title.text = demoTodoList[indexPath.row]
+        let todo = resultController.object(at: indexPath)
+        
+        cell.title.text = todo.title
 
         return cell
     }
@@ -100,13 +135,21 @@ class ToDoTableVC: UITableViewController {
         
         let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
         let post = UIAlertAction(title: "Post", style: UIAlertActionStyle.default) { (_) in
+        
             
-           // let item = Item(context: PersistenceServce.context)
-            item.title = addAlert.textFields![0].text!
-            item.isCompleted = false
+            let todo = Item(context: self.coreDataStack.manageContext)
             
+            todo.title = addAlert.textFields![0].text!
+            todo.isCompleted = false
+            todo.date = Date()
             
-            self.demoTodoList.append(addAlert.textFields![0].text!)
+            do {
+                try self.coreDataStack.manageContext.save()
+            } catch
+            {
+                print("Error Save Todo :  \(error.localizedDescription)")
+            }
+            
             self.tableView.reloadData()
         }
         
@@ -115,6 +158,9 @@ class ToDoTableVC: UITableViewController {
         
       
         present(addAlert, animated: true, completion: nil)
+        
+        
+       
         
     }
     

@@ -12,7 +12,6 @@ import CoreData
 class PersistenceService
 {
     // MARK: - Core Data stack
-    
     var container : NSPersistentContainer
     {
         let container = NSPersistentContainer(name: "ModelData")
