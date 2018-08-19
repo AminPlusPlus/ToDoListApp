@@ -13,8 +13,8 @@
         <!--MY LIST-->
         <scene sceneID="ocm-ex-UMA">
             <objects>
-                <tableViewController id="w2a-R0-9QP" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="RFq-eh-8dC">
+                <tableViewController id="w2a-R0-9QP" customClass="ToDoTableVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="RFq-eh-8dC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="587"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -25,15 +25,15 @@
                             <color key="trackTintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </progressView>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="ChM-b0-IFV">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="todo" rowHeight="50" id="ChM-b0-IFV" customClass="ToDoCell" customModule="TodoList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="30" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ChM-b0-IFV" id="90m-oY-kBP">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ToDo Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="hHb-RX-kic">
-                                            <rect key="frame" x="16" y="14" width="89" height="23"/>
+                                            <rect key="frame" x="16" y="14" width="343" height="23"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="20"/>
                                             <nil key="textColor"/>
@@ -41,6 +41,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="title" destination="hHb-RX-kic" id="vfG-O6-vUK"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -49,15 +52,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="MY LIST" id="7aJ-T6-vuA"/>
+                    <connections>
+                        <outlet property="progressView" destination="weB-fN-m5s" id="wJK-NK-yYO"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nUK-h4-9N3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="728.79999999999995" y="203.74812593703149"/>
+            <point key="canvasLocation" x="324" y="214.54272863568218"/>
         </scene>
-        <!--View Controller-->
+        <!--ContainerVC-->
         <scene sceneID="5Py-e2-MbO">
             <objects>
-                <viewController id="5bn-Zx-9BH" sceneMemberID="viewController">
+                <viewController id="5bn-Zx-9BH" customClass="ContainerVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ydy-AD-sCu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -83,6 +89,9 @@
                                         <state key="normal" title="Offline">
                                             <color key="titleColor" red="0.58105844259999995" green="0.12855249639999999" blue="0.57453137639999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="triggerConnection:" destination="5bn-Zx-9BH" eventType="touchUpInside" id="EQK-Qs-jDZ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -97,6 +106,9 @@
                                 <state key="normal" title="+">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="addItem:" destination="5bn-Zx-9BH" eventType="touchUpInside" id="vdl-Ca-ivy"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -112,10 +124,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TgR-iU-pGX"/>
                     </view>
+                    <connections>
+                        <outlet property="addButton" destination="pc7-2b-FQA" id="iWn-sG-IIx"/>
+                        <outlet property="connectionButton" destination="rCY-by-EqK" id="sNa-ZG-wEK"/>
+                        <outlet property="containerView" destination="XoK-LO-69X" id="2qj-CB-Ur8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="daJ-Rm-pSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1045.5999999999999" y="203.74812593703149"/>
+            <point key="canvasLocation" x="-1311" y="215"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="cx3-gp-8Hr">
@@ -131,7 +148,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iOF-zm-dpi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-222" y="204"/>
+            <point key="canvasLocation" x="-508" y="215"/>
         </scene>
     </scenes>
 </document>
