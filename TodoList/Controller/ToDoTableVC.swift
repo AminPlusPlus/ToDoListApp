@@ -12,7 +12,10 @@ import CoreData
 class ToDoTableVC: UITableViewController {
     
     
+    //MARK: - Core Data
     
+    var resultController :  NSFetchedResultsController<Item>!
+    let coreDataStack = PersistenceService()
     
     
     @IBOutlet weak var progressView: UIProgressView!
@@ -98,7 +101,7 @@ class ToDoTableVC: UITableViewController {
         let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
         let post = UIAlertAction(title: "Post", style: UIAlertActionStyle.default) { (_) in
             
-            let item = Item(context: PersistenceServce.context)
+           // let item = Item(context: PersistenceServce.context)
             item.title = addAlert.textFields![0].text!
             item.isCompleted = false
             
