@@ -15,9 +15,6 @@
 		0DB9DF332128B3050090E1F2 /* ToDoTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB9DF322128B3050090E1F2 /* ToDoTableVC.swift */; };
 		0DB9DF352128B31C0090E1F2 /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB9DF342128B31C0090E1F2 /* ToDoCell.swift */; };
 		0DB9DF3D2128CC2A0090E1F2 /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0DB9DF3B2128CC2A0090E1F2 /* ModelData.xcdatamodeld */; };
-		0DB9DF402128CD4B0090E1F2 /* Item+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB9DF3E2128CD4B0090E1F2 /* Item+CoreDataClass.swift */; };
-		0DB9DF412128CD4B0090E1F2 /* Item+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB9DF3F2128CD4B0090E1F2 /* Item+CoreDataProperties.swift */; };
-		0DB9DF432128CE100090E1F2 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB9DF422128CE100090E1F2 /* PersistenceService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,9 +28,6 @@
 		0DB9DF322128B3050090E1F2 /* ToDoTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableVC.swift; sourceTree = "<group>"; };
 		0DB9DF342128B31C0090E1F2 /* ToDoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
 		0DB9DF3C2128CC2A0090E1F2 /* ModelData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelData.xcdatamodel; sourceTree = "<group>"; };
-		0DB9DF3E2128CD4B0090E1F2 /* Item+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataClass.swift"; sourceTree = "<group>"; };
-		0DB9DF3F2128CD4B0090E1F2 /* Item+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0DB9DF422128CE100090E1F2 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +61,6 @@
 			isa = PBXGroup;
 			children = (
 				0DB9DF4421297B2D0090E1F2 /* CoreData */,
-				0DB9DF382128B3380090E1F2 /* Model */,
 				0DB9DF372128B32F0090E1F2 /* View */,
 				0DB9DF362128B3270090E1F2 /* Controller */,
 				0DB9DF20212899B20090E1F2 /* AppDelegate.swift */,
@@ -84,7 +77,6 @@
 			children = (
 				0DB9DF22212899B20090E1F2 /* ContainerVC.swift */,
 				0DB9DF322128B3050090E1F2 /* ToDoTableVC.swift */,
-				0DB9DF422128CE100090E1F2 /* PersistenceService.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -95,15 +87,6 @@
 				0DB9DF342128B31C0090E1F2 /* ToDoCell.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		0DB9DF382128B3380090E1F2 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0DB9DF3E2128CD4B0090E1F2 /* Item+CoreDataClass.swift */,
-				0DB9DF3F2128CD4B0090E1F2 /* Item+CoreDataProperties.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		0DB9DF4421297B2D0090E1F2 /* CoreData */ = {
@@ -186,13 +169,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DB9DF23212899B20090E1F2 /* ContainerVC.swift in Sources */,
-				0DB9DF432128CE100090E1F2 /* PersistenceService.swift in Sources */,
-				0DB9DF412128CD4B0090E1F2 /* Item+CoreDataProperties.swift in Sources */,
 				0DB9DF21212899B20090E1F2 /* AppDelegate.swift in Sources */,
 				0DB9DF3D2128CC2A0090E1F2 /* ModelData.xcdatamodeld in Sources */,
 				0DB9DF332128B3050090E1F2 /* ToDoTableVC.swift in Sources */,
 				0DB9DF352128B31C0090E1F2 /* ToDoCell.swift in Sources */,
-				0DB9DF402128CD4B0090E1F2 /* Item+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,15 +316,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HJENA3UE68;
+				DEVELOPMENT_TEAM = F4G6PWG2S8;
 				INFOPLIST_FILE = TodoList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.amin.TodoList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.aminapp.TodoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -354,15 +336,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HJENA3UE68;
+				DEVELOPMENT_TEAM = F4G6PWG2S8;
 				INFOPLIST_FILE = TodoList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.amin.TodoList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.aminapp.TodoList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

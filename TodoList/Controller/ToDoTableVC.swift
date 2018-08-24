@@ -9,40 +9,20 @@
 import UIKit
 import CoreData
 
+struct Item {
+    
+    var title : String
+    var isCompleted : Bool
+    var saveTime : Date
+    
+}
+
 class ToDoTableVC: UITableViewController {
     
     
     //MARK: - Core Data
     
-    var resultController :  NSFetchedResultsController<Item>!
-    let coreDataStack = PersistenceService()
-    
-    func initCoreDataCollection ()
-    {
-        //request
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
-        let sortDescription = NSSortDescriptor(key: "date", ascending: true)
-        
-        request.sortDescriptors = [sortDescription]
-        
-        //Init
-        resultController = NSFetchedResultsController(
-            fetchRequest: request,
-            managedObjectContext: coreDataStack.manageContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        
-        
-        //fetch
-        
-        do {
-        try resultController.performFetch()
-        } catch
-        {
-            print("Error : \(error.localizedDescription)")
-        }
-        
-    }
+    var items : [NSManagedObject] = []
     
     
     @IBOutlet weak var progressView: UIProgressView!
@@ -51,12 +31,24 @@ class ToDoTableVC: UITableViewController {
         super.viewDidLoad()
         
         //init Core Data
-        initCoreDataCollection()
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ItemData")
+        
+        do {
+            items = try managedContext.fetch(fetchRequest)
+            
+            print(items.count)
+        } catch
+        {
+            print("Fetch Problem  \(error.localizedDescription)")
+        }
+        
         
         
     }
-
-   
+    
 
     // MARK: - Table view data source
 
@@ -67,19 +59,16 @@ class ToDoTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+    
+        return items.count
         
-        print(resultController.sections?[section].objects?.count)
-        
-        return resultController.sections?[section].objects?.count ?? 0
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "todo", for: indexPath) as! ToDoCell
-
-        let todo = resultController.object(at: indexPath)
-        
-        cell.title.text = todo.title
+      let cell = tableView.dequeueReusableCell(withIdentifier: "todo", for: indexPath) as! ToDoCell
+      
+        cell.title.text =  items[indexPath.row].value(forKeyPath: "title") as? String
 
         return cell
     }
@@ -97,7 +86,9 @@ class ToDoTableVC: UITableViewController {
         
         let deleteAction = UITableViewRowAction(style: .normal, title: "Delete") { (Action, IndexPath) in
             
-            print("Delete")
+            self.items.remove(at: indexPath.row)
+            self.coreDataSave()
+            self.tableView.reloadData()
         }
         
         deleteAction.backgroundColor = .red
@@ -136,19 +127,7 @@ class ToDoTableVC: UITableViewController {
         let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
         let post = UIAlertAction(title: "Post", style: UIAlertActionStyle.default) { (_) in
         
-            
-            let todo = Item(context: self.coreDataStack.manageContext)
-            
-            todo.title = addAlert.textFields![0].text!
-            todo.isCompleted = false
-            todo.date = Date()
-            
-            do {
-                try self.coreDataStack.manageContext.save()
-            } catch
-            {
-                print("Error Save Todo :  \(error.localizedDescription)")
-            }
+            self.saveItem((addAlert.textFields?[0].text)!)
             
             self.tableView.reloadData()
         }
@@ -160,13 +139,44 @@ class ToDoTableVC: UITableViewController {
         present(addAlert, animated: true, completion: nil)
         
         
-       
-        
     }
+    
+    func saveItem (_ item : String)
+    {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "ItemData", in: managedContext)
+        let itemData = NSManagedObject(entity: entity!, insertInto: managedContext)
+        
+        itemData.setValue(item, forKey: "title")
+        
+        do {
+            try managedContext.save()
+            items.append(itemData)
+        } catch
+        {
+            print("Erro \(error.localizedDescription)")
+        }
+    }
+    
+    
     
     func connectionTable()
     {
         
+    }
+    
+    func coreDataSave ()
+    {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        do {
+           try managedContext.save()
+        } catch
+        {
+            print("Erro Save \(error.localizedDescription)")
+        }
     }
     
 

@@ -26,14 +26,18 @@ class ContainerVC: UIViewController
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        
-
-        
+      
+    
         
         
         //Making button round
         addButton.layer.cornerRadius = addButton.frame.width / 2
+        
+        
+        
     }
+    
+
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -53,6 +57,8 @@ class ContainerVC: UIViewController
     @IBAction func addItem (_ sender :  UIButton)
     {
         todoTableVC.addNewItem()
+        
+        
     }
     
 
